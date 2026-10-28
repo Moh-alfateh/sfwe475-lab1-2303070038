@@ -1,21 +1,18 @@
-import { addTask, findTask, Task } from "./tasks";
+import { fetchTodo, fetchTodos, fetchTodosSequential } from "./api";
 
-let tasks: Task[] = [];
+async function main() {
+  const todo = await fetchTodo(1);
+  console.log(todo);
 
-tasks = addTask(tasks, "Read Chapter 1");
+  const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const task = findTask(tasks, 1);
+  console.time("sequential");
+  await fetchTodosSequential(ids);
+  console.timeEnd("sequential");
 
-if (task.ok) {
-  console.log(task.task.title);
-} else {
-  console.log(task.error);
+  console.time("parallel");
+  await fetchTodos(ids);
+  console.timeEnd("parallel");
 }
 
-const missingTask = findTask(tasks, 99);
-
-if (missingTask.ok) {
-  console.log(missingTask.task.title);
-} else {
-  console.log(missingTask.error);
-}
+main();

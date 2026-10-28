@@ -1,0 +1,1 @@
+While `await fetch(...)` is waiting for the server, my program isn't frozen. The function that is awaiting pauses, but JavaScript can keep running other code, like other functions or timers. When the response arrives, the paused function picks up where it left off.
